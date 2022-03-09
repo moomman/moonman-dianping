@@ -5,11 +5,11 @@ spring:
     name: moonman
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hmdp?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/moonmandianping?useSSL=false&serverTimezone=UTC
     username: root
     password: 123
   redis:
-    host: 192.168.137.128
+    host: 192.168.137.129
     port: 6379
     password: root
     lettuce:
