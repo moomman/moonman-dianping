@@ -79,7 +79,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Result login(LoginFormDTO loginForm, HttpSession session) {
         //验证手机号和验证码
-        log.info(loginForm.toString());
         String phone = loginForm.getPhone();
         if (phone == null || RegexUtils.isPhoneInvalid(phone) || stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY+phone) == null){
             return Result.fail("手机号或验证码错误");

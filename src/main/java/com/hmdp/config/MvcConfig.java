@@ -1,6 +1,8 @@
 package com.hmdp.config;
 
+
 import com.hmdp.utils.LoginIntecepter;
+import com.hmdp.utils.RedisRefreshIntecepter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -14,7 +16,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginIntecepter(stringRedisTemplate))
+
+        //判断用户是否存在
+        registry.addInterceptor(new LoginIntecepter())
                 .excludePathPatterns(
                         "/user/code",
                         "/user/login",
@@ -22,6 +26,9 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/shop-type/**",
                         "/blog/hot"
                 );
+
+        //在访问全部路径时都刷新tokenkey的存活时间,避免突然退出登录的情况
+        registry.addInterceptor(new RedisRefreshIntecepter(stringRedisTemplate)).addPathPatterns("/**");
     }
 }
 
